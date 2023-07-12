@@ -2,7 +2,9 @@ enum PAGES {
   root,
   todos,
   error,
+  savedTodo,
 }
+
 extension AppPageExtension on PAGES {
   String get screenPath {
     switch (this) {
@@ -13,10 +15,13 @@ extension AppPageExtension on PAGES {
         return "/todos";
       case PAGES.error:
         return "/error";
+      case PAGES.savedTodo:
+        return "/saved-todo";
       default:
         return "/";
     }
   }
+
   String get screenName {
     switch (this) {
       case PAGES.root:
@@ -25,6 +30,8 @@ extension AppPageExtension on PAGES {
         return "ERROR";
       case PAGES.todos:
         return "TODOS";
+      case PAGES.savedTodo:
+        return "SAVED-TODOS";
       default:
         return "ROOT";
     }

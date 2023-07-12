@@ -23,4 +23,12 @@ class TodosModel extends TodosEntity {
       _$TodosModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TodosModelToJson(this);
+  factory TodosModel.fromEntity(TodosEntity todo) {
+    return TodosModel(
+      id: todo.id,
+      title: todo.title,
+      completed: todo.completed,
+      userId: todo.userId,
+    );
+  }
 }
