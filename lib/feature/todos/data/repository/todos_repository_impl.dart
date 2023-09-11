@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:injectable/injectable.dart';
@@ -32,7 +33,18 @@ class TodosRepositoryImpl implements TodosRepository {
       }
       // ignore: deprecated_member_use
     } on DioError catch (e) {
-      return DataFailed(e);
+      log("DioError: ${e.type}");
+      log("Message: ${e.message}");
+      log("offlineData");
+      var offlineData = await _appDatabase.todosDAO.getTodos();
+      List<TodosModel> todosModels = offlineData.map((entity) {
+        return TodosModel(
+            id: entity.id,
+            title: entity.title,
+            completed: entity.completed,
+            userId: entity.userId);
+      }).toList();
+      return DataSuccess(todosModels);
     }
   }
 
