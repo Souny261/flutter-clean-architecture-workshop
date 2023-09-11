@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:injectable/injectable.dart';
+import 'package:workshop/feature/todos/domain/usecase/get_with_auth_usecase.dart';
 import 'package:workshop/feature/todos/presentation/controller/todos_state.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -13,7 +15,7 @@ import '../../domain/usecase/remove_todo.dart';
 import '../../domain/usecase/save_todo.dart';
 
 final todoNotifier = StateNotifierProvider<TodoNotifier, TodoState>((ref) {
-  return TodoNotifier(getIt(), getIt(), getIt(), getIt());
+  return TodoNotifier(getIt(), getIt(), getIt(), getIt(), getIt());
 });
 
 @injectable
@@ -22,11 +24,16 @@ class TodoNotifier extends StateNotifier<TodoState> {
   final GetSavedTodosUseCase _getTodosSavesUseCase;
   final SaveTodosUseCase _saveTodosUseCase;
   final RemoveTodosUseCase _removeTodosUseCase;
-  TodoNotifier(this._getTodosUseCase, this._getTodosSavesUseCase,
-      this._saveTodosUseCase, this._removeTodosUseCase)
+  final GetWithAuthUseCase _getWithAuthUseCase;
+  TodoNotifier(
+      this._getTodosUseCase,
+      this._getTodosSavesUseCase,
+      this._saveTodosUseCase,
+      this._removeTodosUseCase,
+      this._getWithAuthUseCase)
       : super(TodoState.initial()) {
     log("Start Todo Notifier");
-    fetchTodo();
+    // fetchTodo();
   }
 
   Future<void> fetchTodo() async {
@@ -53,5 +60,11 @@ class TodoNotifier extends StateNotifier<TodoState> {
   Future<void> removeTodo(TodosEntity todosEntity) async {
     _removeTodosUseCase(params: todosEntity);
     fecthTodoSaved();
+  }
+
+  Future<void> getDataWithAuth() async {
+    var data = await _getWithAuthUseCase();
+    print("data: ${data.data}");
+    // log("getDataWithAuth: ${jsonEncode(data)}");
   }
 }

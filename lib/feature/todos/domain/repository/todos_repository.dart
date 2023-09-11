@@ -8,4 +8,5 @@ abstract class TodosRepository {
   Future<List<TodosEntity>> getSavedTodos();
   Future<void> saveTodo(TodosEntity todo);
   Future<void> removeTodo(TodosEntity todo);
+  Future<DataState<dynamic>> getDataWithBearerAndQuery();
 }

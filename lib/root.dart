@@ -6,6 +6,7 @@ import 'config/routes/app_router.dart';
 import 'config/routes/route_utils.dart';
 
 import 'core/services/translate_service.dart';
+import 'feature/todos/presentation/controller/todos_notifier.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({super.key});
@@ -56,6 +57,19 @@ class RootPage extends StatelessWidget {
                   },
                   child: const Text(
                     "GO",
+                    style: TextStyle(
+                        color: AppColors.colorWhite,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14),
+                  ),
+                ),
+                MaterialButton(
+                  color: AppColors.colorPrimary,
+                  onPressed: () {
+                    ref.read(todoNotifier.notifier).getDataWithAuth();
+                  },
+                  child: const Text(
+                    "Get Data With Auth",
                     style: TextStyle(
                         color: AppColors.colorWhite,
                         fontWeight: FontWeight.bold,
