@@ -28,6 +28,9 @@ abstract class AppModule {
           if (e.response?.statusCode == 401) {
             // If a 401 response is received, refresh the access token
             String newAccessToken = await refreshToken();
+            if (newAccessToken == "REFRESH_TOKEN_EXPIRED") {
+              //  Logout Don't active longtime
+            }
             // Update the request header with the new access token
             e.requestOptions.headers['Authorization'] =
                 'Bearer $newAccessToken';
